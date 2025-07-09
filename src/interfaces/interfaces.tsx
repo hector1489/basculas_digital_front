@@ -8,7 +8,7 @@ export interface User {
 
 export interface AuthContextType {
   user: User | null;
-    login: (userData: User, userToken: string) => void;
+  login: (userData: User, userToken: string) => void;
   logout: () => void;
   loading: boolean;
   isAdmin: boolean;

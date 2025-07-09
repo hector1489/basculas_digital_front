@@ -1,0 +1,23 @@
+[
+  {
+    "id": "prod-001",
+    "name": "Carnes X",
+    "description": "Lomo , Carnes Angus",
+    "price": 799.99,
+    "imageUrl": "src/assets/img/Cabecera.jpg"
+  },
+  {
+    "id": "prod-002",
+    "name": "Pollo 15",
+    "description": "Truto de pollo, Super Pollo.",
+    "price": 1499.00,
+    "imageUrl": "src/assets/img/truto.png"
+  },
+  {
+    "id": "prod-003",
+    "name": "Queso Fresco",
+    "description": "Queso Santa Emilia, Queso de cabra.",
+    "price": 129.50,
+    "imageUrl": "src/assets/img/queso.png"
+  }
+]
