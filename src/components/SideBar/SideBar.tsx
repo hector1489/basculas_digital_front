@@ -10,19 +10,14 @@ const Sidebar: React.FC<SidebarProps> = ({ onSelectOption, selectedOption }) => 
   const options = ["Inicio", "Productos", "Servicios", "Contacto"];
 
   return (
-    <aside style={{ width: "200px", background: "#f4f4f4", padding: "1rem", borderRight: "1px solid #ddd" }}>
+    <aside className="sidebar-aside">
       <h3>Menú</h3>
       <ul>
         {options.map((option) => (
           <li
             key={option}
             onClick={() => onSelectOption(option)}
-            style={{
-              marginBottom: "0.5rem",
-              cursor: "pointer",
-              fontWeight: selectedOption === option ? "bold" : "normal",
-              color: selectedOption === option ? "#007bff" : "inherit",
-            }}
+            className={`sidebar-menu-item ${selectedOption === option ? 'sidebar-menu-item-active' : ''}`}
           >
             {option}
           </li>

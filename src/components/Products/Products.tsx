@@ -1,6 +1,8 @@
-import './Products.css'
+import './Products.css';
 import type React from "react";
+import { useState } from 'react';
 import productsData from "../../DataJson/products.json";
+import ProductDetail from '../ProductDetail/ProductDetail';
 
 interface Product {
   id: string;
@@ -8,27 +10,52 @@ interface Product {
   description: string;
   price: number;
   imageUrl: string;
+  longDescription?: string;
+  stock?: number;
 }
 
 const Products: React.FC = () => {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  const handleProductClick = (product: Product) => {
+    setSelectedProduct(product);
+  };
+
   return (
-    <div>
+    <div className="products-container">
       <h2>Nuestros Productos</h2>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "20px" }}>
-        {productsData.map((product: Product) => (
-          <div key={product.id} style={{ border: "1px solid #ddd", padding: "15px", borderRadius: "8px", textAlign: "center" }}>
-            <img src={product.imageUrl} alt={product.name} style={{ maxWidth: "100%", height: "150px", objectFit: "cover", marginBottom: "10px", borderRadius: "4px" }} />
-            <h3>{product.name}</h3>
-            <p>{product.description}</p>
-            <p style={{ fontWeight: "bold", color: "#007bff" }}>${product.price.toFixed(2)}</p>
-            <button style={{ background: "#28a745", color: "#fff", border: "none", padding: "8px 15px", borderRadius: "5px", cursor: "pointer" }}>Ver Detalle</button>
+      <div className="products-layout">
+        <div className="products-list-column">
+          <div className="products-grid">
+            {productsData.map((product: Product) => (
+              <div
+                key={product.id}
+                className={`product-card ${selectedProduct?.id === product.id ? 'product-card-selected' : ''}`}
+                onClick={() => handleProductClick(product)}
+              >
+                <img src={product.imageUrl} alt={product.name} className="product-image" />
+                <div className="product-info">
+                  <h3 className="product-name">{product.name}</h3>
+                  <p className="product-description">{product.description}</p>
+                  <p className="product-price">${product.price.toFixed(2)}</p>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+
+        <div className="product-detail-column">
+          {selectedProduct ? (
+            <ProductDetail product={selectedProduct} />
+          ) : (
+            <p className="no-product-selected-message">
+              Selecciona un producto de la lista para ver sus detalles.
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
 export default Products;
-
-
