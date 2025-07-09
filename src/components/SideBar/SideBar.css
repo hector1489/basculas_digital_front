@@ -8,9 +8,18 @@
 .sidebar-menu-item {
   margin-bottom: 0.5rem;
   cursor: pointer;
-  /* Estos estilos serán controlados por React en línea */
-  /* font-weight: normal; */
-  /* color: inherit; */
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.sidebar-menu-item i {
+  margin-right: 10px;
+  font-size: 1em;
+}
+
+.sidebar-menu-item span {
+  flex-grow: 1;
 }
 
 .sidebar-menu-item-active {

@@ -1,6 +1,7 @@
 import type React from "react";
 import Sidebar from "../SideBar/SideBar";
-import Products from '../../components/Products/Products'; 
+import Products from '../Products/Products'; 
+import Scales from "../Scales/Scales";
 
 interface LayoutProps {
   children?: React.ReactNode;
@@ -21,6 +22,8 @@ const Layout: React.FC<LayoutProps> = ({ selectedOption, onSelectOption }) => {
         );
       case "Productos":
         return <Products />;
+      case "Balanza":
+        return <Scales />;
       case "Servicios":
         return (
           <div>
