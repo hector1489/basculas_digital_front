@@ -12,7 +12,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onSelectOption, selectedOption }) => 
     { name: "Inicio", icon: <i className="fa-solid fa-house-chimney"></i> },
     { name: "Productos", icon: <i className="fa-solid fa-box-open"></i> },
     { name: "Balanza", icon: <i className="fa-solid fa-scale-balanced"></i>},
-    { name: "Servicios", icon: <i className="fa-solid fa-bell-concierge"></i>},
+    { name: "Sincronizar", icon: <i className="fa-solid fa-rotate"></i>},
+    { name: "Usuarios", icon: <i className="fa-solid fa-users"></i>},
     { name: "Contacto", icon: <i className="fa-solid fa-envelope"></i> },
   ];
 

@@ -2,6 +2,9 @@ import type React from "react";
 import Sidebar from "../SideBar/SideBar";
 import Products from '../Products/Products'; 
 import Scales from "../Scales/Scales";
+import SyncDevices from "../SyncDevices/SyncDevices"; 
+import ManageUsers from "../ManageUsers/ManageUsers";
+import ContactForm from "../ContactForm/ContactForm";
 
 interface LayoutProps {
   children?: React.ReactNode;
@@ -24,25 +27,12 @@ const Layout: React.FC<LayoutProps> = ({ selectedOption, onSelectOption }) => {
         return <Products />;
       case "Balanza":
         return <Scales />;
-      case "Servicios":
-        return (
-          <div>
-            <h2>Nuestros Servicios</h2>
-            <p>Ofrecemos una amplia gama de servicios para satisfacer tus necesidades.</p>
-            <ul>
-              <li>Servicio X</li>
-              <li>Servicio Y</li>
-            </ul>
-          </div>
-        );
+        case "Sincronizar":
+         return <SyncDevices />;
+      case "Usuarios":
+        return <ManageUsers />
       case "Contacto":
-        return (
-          <div>
-            <h2>Contáctanos</h2>
-            <p>Puedes contactarnos a través de nuestro formulario o en nuestras redes sociales.</p>
-            <p>Email: info@miapp.com</p>
-          </div>
-        );
+        return <ContactForm />
       default:
         return (
           <div>

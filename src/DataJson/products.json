@@ -1,23 +1,67 @@
 [
   {
     "id": "prod-001",
-    "name": "Carnes X",
-    "description": "Lomo , Carnes Angus",
-    "price": 799.99,
-    "imageUrl": "src/assets/img/Cabecera.jpg"
+    "name": "Carnes Premium Angus",
+    "description": "Lomo liso y cortes seleccionados de Carne Angus, ideal para parrillas.",
+    "priceRetail": 799.99,
+    "priceSupplier": 650.00,
+    "priceEmployee": 700.00,
+    "imageUrl": "src/assets/img/Cabecera.jpg",
+    "availableForDelivery": true,
+    "stock": 150,
+    "category": "Carnes Rojas",
+    "brand": "Angus Select"
   },
   {
     "id": "prod-002",
-    "name": "Pollo 15",
-    "description": "Truto de pollo, Super Pollo.",
-    "price": 1499.00,
-    "imageUrl": "src/assets/img/truto.png"
+    "name": "Truto Entero de Pollo",
+    "description": "Truto de pollo fresco, de la marca Super Pollo, ideal para asados o guisos.",
+    "priceRetail": 1499.00,
+    "priceSupplier": 1200.00,
+    "priceEmployee": 1300.00,
+    "imageUrl": "src/assets/img/truto.png",
+    "availableForDelivery": true,
+    "stock": 300,
+    "category": "Aves",
+    "brand": "Super Pollo"
   },
   {
     "id": "prod-003",
-    "name": "Queso Fresco",
-    "description": "Queso Santa Emilia, Queso de cabra.",
-    "price": 129.50,
-    "imageUrl": "src/assets/img/queso.png"
+    "name": "Queso Fresco de Cabra Santa Emilia",
+    "description": "Queso fresco artesanal de cabra, suave y cremoso, perfecto para ensaladas o picoteos.",
+    "priceRetail": 129.50,
+    "priceSupplier": 100.00,
+    "priceEmployee": 110.00,
+    "imageUrl": "src/assets/img/queso.png",
+    "availableForDelivery": false,
+    "stock": 80,
+    "category": "Lácteos",
+    "brand": "Santa Emilia"
+  },
+  {
+    "id": "prod-004",
+    "name": "Pan Amasado Artesanal",
+    "description": "Pan fresco, horneado diariamente, con receta tradicional.",
+    "priceRetail": 850.00,
+    "priceSupplier": 700.00,
+    "priceEmployee": 750.00,
+    "imageUrl": "src/assets/img/pan.png",
+    "availableForDelivery": true,
+    "stock": 200,
+    "category": "Panadería",
+    "brand": "La Panera"
+  },
+  {
+    "id": "prod-005",
+    "name": "Leche Descremada Loncoleche",
+    "description": "Leche descremada UHT, enriquecida con vitaminas A y D.",
+    "priceRetail": 990.00,
+    "priceSupplier": 850.00,
+    "priceEmployee": 900.00,
+    "imageUrl": "src/assets/img/leche.png",
+    "availableForDelivery": true,
+    "stock": 500,
+    "category": "Lácteos",
+    "brand": "Loncoleche"
   }
 ]

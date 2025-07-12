@@ -1,13 +1,18 @@
-import type React from 'react';
+import React from 'react';
+import styles from './ProductDetail.module.css';
 
 interface Product {
   id: string;
   name: string;
   description: string;
-  price: number;
+  priceRetail: number;
+  priceSupplier: number;
+  priceEmployee: number;
   imageUrl: string;
-  longDescription?: string;
-  stock?: number;
+  availableForDelivery: boolean;
+  stock: number;
+  category: string;
+  brand: string;
 }
 
 interface ProductDetailProps {
@@ -16,14 +21,26 @@ interface ProductDetailProps {
 
 const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
   return (
-    <div className="product-detail-card">
-      <img src={product.imageUrl} alt={product.name} className="detail-image" />
-      <h2 className="detail-name">{product.name}</h2>
-      <p className="detail-description">{product.description}</p>
-      {product.longDescription && <p className="detail-description">{product.longDescription}</p>}
-      <p className="detail-price">${product.price.toFixed(2)}</p>
-      {product.stock !== undefined && <p>Stock disponible: {product.stock}</p>}
-      <button className="detail-action-button">Añadir al Carrito</button>
+    <div className={styles.productDetailCard}>
+      <img src={product.imageUrl} alt={product.name} className={styles.productDetailImage} />
+      <div className={styles.productDetailInfo}>
+        <h2 className={styles.productDetailName}>{product.name}</h2>
+        <p className={styles.productDetailDescription}>{product.description}</p>
+
+        <div className={styles.productPrices}>
+          <p><strong>Precio Público:</strong> ${product.priceRetail.toFixed(2)}</p>
+          <p><strong>Precio Proveedor:</strong> ${product.priceSupplier.toFixed(2)}</p>
+          <p><strong>Precio Empleado:</strong> ${product.priceEmployee.toFixed(2)}</p>
+        </div>
+
+        <p><strong>Categoría:</strong> {product.category}</p>
+        <p><strong>Marca:</strong> {product.brand}</p>
+        <p><strong>Stock Disponible:</strong> {product.stock} unidades</p>
+        <p>
+          <strong>Despacho Disponible:</strong>{" "}
+          {product.availableForDelivery ? "Sí" : "No"}
+        </p>
+      </div>
     </div>
   );
 };

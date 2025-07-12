@@ -1,0 +1,290 @@
+.scalesContainer {
+  padding: 1.5rem;
+  background-color: #f4f7f6;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.scalesContainer h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.scalesIntro {
+  text-align: center;
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.scalesMainLayout {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.scalesProductsListColumn {
+  flex: 2;
+  min-width: 300px;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.scalesProductsListColumn h3 {
+  margin-top: 0;
+  margin-bottom: 1.2rem;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.scalesSearchBar {
+  margin-bottom: 1.5rem;
+}
+
+.scalesSearchInput {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.scalesSearchInput:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.scalesProductGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.scalesProductCard {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.scalesProductCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-color: #007bff;
+}
+
+.scalesProductCardSelected {
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+  background-color: #e6f2ff;
+}
+
+.scalesProductImage {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-bottom: 1px solid #eee;
+}
+
+.scalesProductInfo {
+  padding: 0.8rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.scalesProductName {
+  font-size: 1.1rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.scalesProductPrice {
+  font-weight: bold;
+  color: #28a745;
+  margin-bottom: 0.5rem;
+}
+
+.scalesProductStock {
+  font-size: 0.85em;
+  color: #777;
+}
+
+.noResultsMessage {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #999;
+  padding: 1rem;
+}
+
+.scalesControlColumn {
+  flex: 1;
+  min-width: 280px;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.scalesControlColumn h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.scalesSelectedProductInfo {
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.scalesSelectedProductImage {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  border: 3px solid #007bff;
+}
+
+.scalesSelectedProductInfo p {
+  margin: 0.5rem 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+.scalesSelectedProductInfo p strong {
+  color: #333;
+}
+
+.scaleDisplay {
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.scaleDisplay h3 {
+  margin-bottom: 0.8rem;
+}
+
+.scaleValue {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 1.5rem;
+  font-family: 'monospace', sans-serif;
+}
+
+.scaleButton {
+  padding: 0.8rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  width: 100%;
+  margin-bottom: 0.8rem;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.scaleButton:hover {
+  background-color: #0056b3;
+}
+
+.secondaryButton {
+  background-color: #6c757d;
+}
+
+.secondaryButton:hover {
+  background-color: #5a6268;
+}
+
+.noProductSelectedMessage {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #888;
+}
+.noProductSelectedMessage h3 {
+  color: #666;
+  margin-bottom: 1rem;
+}
+.noProductSelectedMessage p {
+  margin-bottom: 1.5rem;
+}
+
+.scaleInfo,
+.scaleHistory {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.scaleInfo h4,
+.scaleHistory h4 {
+  margin-top: 0;
+  margin-bottom: 0.8rem;
+  color: #444;
+}
+
+.statusIndicator {
+  font-size: 1.2rem;
+  margin-right: 5px;
+}
+.statusIndicatorConnected {
+  color: #28a745;
+}
+.statusIndicatorDisconnected {
+  color: #dc3545;
+}
+
+.scaleHistory ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.scaleHistory li {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+
+@media (max-width: 768px) {
+  .scalesMainLayout {
+    flex-direction: column;
+  }
+
+  .scalesProductsListColumn,
+  .scalesControlColumn {
+    min-width: unset;
+    width: 100%;
+  }
+}

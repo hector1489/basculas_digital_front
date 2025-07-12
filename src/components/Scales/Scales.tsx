@@ -1,22 +1,27 @@
 import type React from 'react';
 import { useState } from 'react';
 import productsData from "../../DataJson/products.json";
-import './Scales.css';
+import styles from './Scales.module.css';
 
 interface Product {
   id: string;
   name: string;
   description: string;
-  price: number;
+  priceRetail: number;
+  priceSupplier: number;
+  priceEmployee: number;
   imageUrl: string;
-  longDescription?: string;
-  stock?: number;
+  availableForDelivery: boolean;
+  stock: number;
+  category: string;
+  brand: string;
 }
 
 const Scales: React.FC = () => {
   const [productToWeigh, setProductToWeigh] = useState<Product | null>(null);
   const [currentWeight, setCurrentWeight] = useState<number | null>(null);
   const [weighingHistory, setWeighingHistory] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   const handleProductSelect = (product: Product) => {
     setProductToWeigh(product);
@@ -30,7 +35,7 @@ const Scales: React.FC = () => {
 
       const now = new Date();
       const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      setWeighingHistory(prevHistory => [`${simulatedWeight} kg de ${productToWeigh.name} - ${time}`, ...prevHistory.slice(0, 4)]);
+      setWeighingHistory(prevHistory => [`${productToWeigh.name} - ${simulatedWeight} kg (${time})`, ...prevHistory.slice(0, 4)]);
     } else {
       alert("Por favor, selecciona un producto de la lista para pesar.");
     }
@@ -40,69 +45,97 @@ const Scales: React.FC = () => {
     alert("Simulando calibración de la balanza...");
   };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredProducts = productsData.filter((product: Product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.brand.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="scales-container">
+    <div className={styles.scalesContainer}>
       <h2>Gestión de Balanzas</h2>
-      <p className="scales-intro">
-        Haz clic en un producto para seleccionarlo y simular su pesaje.
+      <p className={styles.scalesIntro}>
+        Haz clic en un producto para seleccionarlo y simular su pesaje. Utiliza el buscador para encontrar productos rápidamente por nombre, categoría o marca.
       </p>
 
-      <div className="scales-main-layout">
-        <div className="scales-products-list-column">
+      <div className={styles.scalesMainLayout}>
+        <div className={styles.scalesProductsListColumn}>
           <h3>Productos Disponibles</h3>
-          <div className="scales-product-grid">
-            {productsData.map((product: Product) => (
-              <div
-                key={product.id}
-                className={`scales-product-card ${productToWeigh?.id === product.id ? 'scales-product-card-selected' : ''}`}
-                onClick={() => handleProductSelect(product)}
-              >
-                <img src={product.imageUrl} alt={product.name} className="scales-product-image" />
-                <div className="scales-product-info">
-                  <h4 className="scales-product-name">{product.name}</h4>
-                  <p className="scales-product-price">${product.price.toFixed(2)}</p>
+          <div className={styles.scalesSearchBar}>
+            <input
+              type="text"
+              placeholder="Buscar productos..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              className={styles.scalesSearchInput}
+            />
+          </div>
+          <div className={styles.scalesProductGrid}>
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((product: Product) => (
+                <div
+                  key={product.id}
+                  className={`${styles.scalesProductCard} ${productToWeigh?.id === product.id ? styles.scalesProductCardSelected : ''}`}
+                  onClick={() => handleProductSelect(product)}
+                >
+                  <img src={product.imageUrl} alt={product.name} className={styles.scalesProductImage} />
+                  <div className={styles.scalesProductInfo}>
+                    <h4 className={styles.scalesProductName}>{product.name}</h4>
+                    <p className={styles.scalesProductPrice}>${product.priceRetail.toFixed(2)}</p>
+                    <span className={styles.scalesProductStock}>Stock: {product.stock}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className={styles.noResultsMessage}>No se encontraron productos que coincidan con tu búsqueda.</p>
+            )}
           </div>
         </div>
 
-        <div className="scales-control-column">
+        <div className={styles.scalesControlColumn}>
           {productToWeigh ? (
             <>
-              <div className="scales-selected-product-info">
+              <div className={styles.scalesSelectedProductInfo}>
                 <h3>Pesando: {productToWeigh.name}</h3>
-                <img src={productToWeigh.imageUrl} alt={productToWeigh.name} className="scales-selected-product-image" />
+                <img src={productToWeigh.imageUrl} alt={productToWeigh.name} className={styles.scalesSelectedProductImage} />
                 <p>{productToWeigh.description}</p>
-                <p>Precio Unitario: ${productToWeigh.price.toFixed(2)}</p>
+                {/* Usamos priceRetail */}
+                <p>Precio Unitario: ${productToWeigh.priceRetail.toFixed(2)}</p>
+                <p>Categoría: {productToWeigh.category}</p>
+                <p>Marca: {productToWeigh.brand}</p>
+                <p>Despacho: {productToWeigh.availableForDelivery ? "Sí" : "No"}</p>
               </div>
 
-              <div className="scale-display">
+              <div className={styles.scaleDisplay}>
                 <h3>Lectura Actual:</h3>
-                <p className="scale-value">
+                <p className={styles.scaleValue}>
                   {currentWeight !== null ? `${currentWeight.toFixed(2)} kg` : '--.-- kg'}
                 </p>
-                <button className="scale-button" onClick={handleStartWeighing}>
+                <button className={styles.scaleButton} onClick={handleStartWeighing}>
                   Pesar {productToWeigh.name}
                 </button>
-                <button className="scale-button secondary" onClick={handleCalibrate}>Calibrar</button>
+                <button className={`${styles.scaleButton} ${styles.secondaryButton}`} onClick={handleCalibrate}>Calibrar Balanza</button>
               </div>
             </>
           ) : (
-            <div className="no-product-selected-message">
+            <div className={styles.noProductSelectedMessage}>
               <h3>Preparado para Pesar</h3>
               <p>Selecciona un producto de la lista de la izquierda para comenzar el pesaje.</p>
               <i className="fa-solid fa-hand-pointer fa-3x" style={{marginTop: '20px', color: '#ccc'}}></i>
             </div>
           )}
 
-          <div className="scale-info">
+          <div className={styles.scaleInfo}>
             <h4>Estado de la Balanza:</h4>
-            <p>Conectada: <span className="status-indicator connected">●</span> Sí</p>
+            <p>Conectada: <span className={styles.statusIndicatorConnected}>●</span> Sí</p>
             <p>Última actualización: hace 5 segundos</p>
           </div>
 
-          <div className="scale-history">
+          <div className={styles.scaleHistory}>
             <h4>Historial de Pesajes Recientes:</h4>
             <ul>
               {weighingHistory.length > 0 ? (

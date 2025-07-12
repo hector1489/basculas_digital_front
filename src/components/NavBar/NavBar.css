@@ -27,9 +27,11 @@
 .nav-bar h1 {
   font-family: 'Roboto', sans-serif;
   font-size: 1.8em;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.5px;
   margin: 0;
+  color: #e74c3c;
+  
 }
 
 .fa-solid.fa-door-open {
