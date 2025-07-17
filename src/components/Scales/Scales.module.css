@@ -2,57 +2,57 @@
   padding: 1.5rem;
   background-color: #f4f7f6;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .scalesContainer h2 {
   text-align: center;
   color: #333;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
 
 .scalesIntro {
   text-align: center;
   color: #666;
-  margin-bottom: 2rem;
-  font-size: 1rem;
-  max-width: 700px;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  max-width: 900px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .scalesMainLayout {
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 
 .scalesProductsListColumn {
-  flex: 2;
+  flex: 1.5;
   min-width: 300px;
   background-color: #fff;
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
 .scalesProductsListColumn h3 {
   margin-top: 0;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.5rem;
   color: #333;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .scalesSearchBar {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .scalesSearchInput {
   width: 100%;
-  padding: 0.8rem 1rem;
+  padding: 0.5rem 0.8rem;
   border: 1px solid #ddd;
   border-radius: 25px;
-  font-size: 1rem;
+  font-size: 0.8rem;
   box-sizing: border-box;
 }
 
@@ -82,6 +82,7 @@
   flex-direction: column;
   text-align: center;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  padding: 10px;
 }
 
 .scalesProductCard:hover {
@@ -104,7 +105,7 @@
 }
 
 .scalesProductInfo {
-  padding: 0.8rem;
+  padding: 0.5rem;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -112,7 +113,7 @@
 }
 
 .scalesProductName {
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   margin-top: 0;
   margin-bottom: 0.5rem;
   color: #333;
@@ -137,15 +138,14 @@
 }
 
 .scalesControlColumn {
-  flex: 1;
-  min-width: 280px;
+  flex: 1.5;
   background-color: #fff;
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .scalesControlColumn h3 {
@@ -164,14 +164,14 @@
   height: 120px;
   object-fit: cover;
   border-radius: 50%;
-  margin-bottom: 1rem;
+  margin-top: 5px;
   border: 3px solid #007bff;
 }
 
 .scalesSelectedProductInfo p {
-  margin: 0.5rem 0;
+  margin: 0.3rem 0;
   color: #555;
-  font-size: 0.95rem;
+  font-size: 0.8rem;
 }
 .scalesSelectedProductInfo p strong {
   color: #333;
@@ -188,21 +188,27 @@
 }
 
 .scaleValue {
-  font-size: 3rem;
+  font-size: 3.2rem;
   font-weight: bold;
   color: #007bff;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
   font-family: 'monospace', sans-serif;
 }
 
+.totalPriceValue {
+  color: #e74c3c;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
 .scaleButton {
-  padding: 0.8rem 1.5rem;
+  padding: 0.5rem 1rem;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   font-weight: bold;
   width: 100%;
   margin-bottom: 0.8rem;

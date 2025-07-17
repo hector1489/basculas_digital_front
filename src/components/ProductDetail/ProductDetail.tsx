@@ -28,9 +28,9 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
         <p className={styles.productDetailDescription}>{product.description}</p>
 
         <div className={styles.productPrices}>
-          <p><strong>Precio Público:</strong> ${product.priceRetail.toFixed(2)}</p>
-          <p><strong>Precio Proveedor:</strong> ${product.priceSupplier.toFixed(2)}</p>
-          <p><strong>Precio Empleado:</strong> ${product.priceEmployee.toFixed(2)}</p>
+          <p><strong>Precio Público:</strong> ${product.priceRetail}</p>
+          <p><strong>Precio Proveedor:</strong> ${product.priceSupplier}</p>
+          <p><strong>Precio Empleado:</strong> ${product.priceEmployee}</p>
         </div>
 
         <p><strong>Categoría:</strong> {product.category}</p>

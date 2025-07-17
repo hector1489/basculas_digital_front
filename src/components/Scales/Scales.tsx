@@ -23,19 +23,29 @@ const Scales: React.FC = () => {
   const [weighingHistory, setWeighingHistory] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
+  const [totalSalePrice, setTotalSalePrice] = useState<number | null>(null);
+
   const handleProductSelect = (product: Product) => {
     setProductToWeigh(product);
     setCurrentWeight(null);
+    setTotalSalePrice(null);
   };
 
   const handleStartWeighing = () => {
     if (productToWeigh) {
-      const simulatedWeight = (Math.random() * 5 + 0.1).toFixed(2);
-      setCurrentWeight(parseFloat(simulatedWeight));
+      const simulatedWeight = Math.round(Math.random() * 5 + 0.1);
+      setCurrentWeight(simulatedWeight);
+
+      const calculatedTotal = Math.round(simulatedWeight * productToWeigh.priceRetail);
+      setTotalSalePrice(calculatedTotal);
 
       const now = new Date();
       const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      setWeighingHistory(prevHistory => [`${productToWeigh.name} - ${simulatedWeight} kg (${time})`, ...prevHistory.slice(0, 4)]);
+
+      setWeighingHistory(prevHistory => [
+        `${productToWeigh.name} - ${simulatedWeight} kg - Total: $${calculatedTotal} (${time})`,
+        ...prevHistory.slice(0, 4)
+      ]);
     } else {
       alert("Por favor, selecciona un producto de la lista para pesar.");
     }
@@ -85,7 +95,7 @@ const Scales: React.FC = () => {
                   <img src={product.imageUrl} alt={product.name} className={styles.scalesProductImage} />
                   <div className={styles.scalesProductInfo}>
                     <h4 className={styles.scalesProductName}>{product.name}</h4>
-                    <p className={styles.scalesProductPrice}>${product.priceRetail.toFixed(2)}</p>
+                    <p className={styles.scalesProductPrice}>${Math.round(product.priceRetail)}</p>
                     <span className={styles.scalesProductStock}>Stock: {product.stock}</span>
                   </div>
                 </div>
@@ -103,8 +113,7 @@ const Scales: React.FC = () => {
                 <h3>Pesando: {productToWeigh.name}</h3>
                 <img src={productToWeigh.imageUrl} alt={productToWeigh.name} className={styles.scalesSelectedProductImage} />
                 <p>{productToWeigh.description}</p>
-                {/* Usamos priceRetail */}
-                <p>Precio Unitario: ${productToWeigh.priceRetail.toFixed(2)}</p>
+                <p>Precio Unitario: ${Math.round(productToWeigh.priceRetail)} / kg</p>
                 <p>Categoría: {productToWeigh.category}</p>
                 <p>Marca: {productToWeigh.brand}</p>
                 <p>Despacho: {productToWeigh.availableForDelivery ? "Sí" : "No"}</p>
@@ -113,7 +122,10 @@ const Scales: React.FC = () => {
               <div className={styles.scaleDisplay}>
                 <h3>Lectura Actual:</h3>
                 <p className={styles.scaleValue}>
-                  {currentWeight !== null ? `${currentWeight.toFixed(2)} kg` : '--.-- kg'}
+                  {currentWeight !== null ? `${currentWeight}kg` : '--.-- kg'}
+                </p>
+                <p className={styles.totalPriceValue}>
+                  Total : {totalSalePrice !== null ? `$ ${totalSalePrice} ` : '--.--'}
                 </p>
                 <button className={styles.scaleButton} onClick={handleStartWeighing}>
                   Pesar {productToWeigh.name}
@@ -125,7 +137,7 @@ const Scales: React.FC = () => {
             <div className={styles.noProductSelectedMessage}>
               <h3>Preparado para Pesar</h3>
               <p>Selecciona un producto de la lista de la izquierda para comenzar el pesaje.</p>
-              <i className="fa-solid fa-hand-pointer fa-3x" style={{marginTop: '20px', color: '#ccc'}}></i>
+              <i className="fa-solid fa-hand-pointer fa-3x" style={{ marginTop: '20px', color: '#ccc' }}></i>
             </div>
           )}
 
