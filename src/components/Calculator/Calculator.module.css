@@ -1,0 +1,98 @@
+.calculatorContainer {
+  overflow: hidden;
+  font-family: 'Arial', sans-serif;
+  background-color: #3a3a3a;
+  margin-top: 5px;
+}
+
+.display {
+  background-color: #222;
+  color: #1eff05;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 8px;
+  text-align: right;
+  height: 40px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  word-wrap: break-word;
+  word-break: break-all;
+  box-sizing: border-box;
+  text-shadow: 0px 0px 8px #1eff05;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background-color: #888;
+}
+
+.buttons button {
+  padding: 8px;
+  font-size: 1.2em;
+  border: none;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  transition: background-color 0.2s ease-in-out;
+  color: #333;
+}
+
+.buttons button:active {
+  background-color: #ddd;
+}
+
+.buttonDigit {
+  background-color: #e0e0e0;
+}
+
+.buttonDigit:hover {
+  background-color: #d0d0d0;
+}
+
+.buttonZero {
+  grid-column: span 2;
+}
+
+.buttonOperator {
+  background-color: #ff9f0a;
+  color: white;
+}
+
+.buttonOperator:hover {
+  background-color: #e08e00;
+}
+
+.buttonOperator:active {
+  background-color: #c07c00;
+}
+
+.buttonEquals {
+  background-color: #ff9f0a;
+  color: white;
+}
+
+.buttonEquals:hover {
+  background-color: #e08e00;
+}
+
+.buttonEquals:active {
+  background-color: #c07c00;
+}
+
+.buttonClear,
+.buttonFunction {
+  background-color: #a6a6a6;
+  color: #333;
+}
+
+.buttonClear:hover,
+.buttonFunction:hover {
+  background-color: #909090;
+}
+
+.buttonClear:active,
+.buttonFunction:active {
+  background-color: #7a7a7a;
+}

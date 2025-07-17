@@ -2,6 +2,7 @@ import type React from 'react';
 import { useState } from 'react';
 import productsData from "../../DataJson/products.json";
 import styles from './Scales.module.css';
+import Calculator from '../Calculator/Calculator';
 
 interface Product {
   id: string;
@@ -111,12 +112,17 @@ const Scales: React.FC = () => {
             <>
               <div className={styles.scalesSelectedProductInfo}>
                 <h3>Pesando: {productToWeigh.name}</h3>
-                <img src={productToWeigh.imageUrl} alt={productToWeigh.name} className={styles.scalesSelectedProductImage} />
-                <p>{productToWeigh.description}</p>
-                <p>Precio Unitario: ${Math.round(productToWeigh.priceRetail)} / kg</p>
-                <p>Categoría: {productToWeigh.category}</p>
-                <p>Marca: {productToWeigh.brand}</p>
-                <p>Despacho: {productToWeigh.availableForDelivery ? "Sí" : "No"}</p>
+                <div className={styles.productDetailsContent}>
+                  <img src={productToWeigh.imageUrl} alt={productToWeigh.name} className={styles.scalesSelectedProductImage} />
+                  <div className={styles.productTextInfo}>
+                    <p><strong>Descripción:</strong> {productToWeigh.description}</p>
+                    <p><strong>Precio Unitario:</strong> ${Math.round(productToWeigh.priceRetail)} / kg</p>
+                    <p><strong>Categoría:</strong> {productToWeigh.category}</p>
+                    <p><strong>Marca:</strong> {productToWeigh.brand}</p>
+                    <p><strong>Despacho:</strong> {productToWeigh.availableForDelivery ? "Sí" : "No"}</p>
+                  </div>
+                </div>
+                <Calculator />
               </div>
 
               <div className={styles.scaleDisplay}>
