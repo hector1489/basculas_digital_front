@@ -12,6 +12,7 @@ const App: React.FC = () => {
       <ErrorBoundary>
       <Routes>
       <Route path='/' element={<LoginPage />} />
+      <Route path='/basculas_digital_front' element={<LoginPage />} />
       <Route path='/login' element={<LoginPage/>} />
       <Route path="/home" element={<Home />} />
       
