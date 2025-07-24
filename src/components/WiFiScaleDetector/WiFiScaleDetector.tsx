@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import styles from './WiFiScaleDetector.module.css'; // Asegúrate de que este archivo exista
+import styles from './WiFiScaleDetector.module.css';
 
-// --- Define las props esperadas para WiFiScaleDetector ---
 interface WiFiScaleDetectorProps {
-  onWeightUpdate: (weight: number | null) => void; // Callback para enviar el peso al componente padre
-  onConnectionStatusChange?: (isConnected: boolean, deviceName: string | null, error: string | null) => void; // Callback opcional para el estado de conexión
+  onWeightUpdate: (weight: number | null) => void;
+  onConnectionStatusChange?: (isConnected: boolean, deviceName: string | null, error: string | null) => void;
 }
 
 const WiFiScaleDetector: React.FC<WiFiScaleDetectorProps> = ({
@@ -18,11 +17,10 @@ const WiFiScaleDetector: React.FC<WiFiScaleDetectorProps> = ({
   const [isConnecting, setIsConnecting] = useState<boolean>(false);
   const intervalRef = React.useRef<number | null>(null);
 
-  // Función para intentar la conexión y comenzar a leer
   const connectAndReadWiFiScale = async () => {
     setIsConnecting(true);
     setError(null);
-    onConnectionStatusChange?.(false, null, 'Conectando...'); // Notifica al padre que se está conectando
+    onConnectionStatusChange?.(false, null, 'Conectando...');
 
     if (!ipAddress) {
       const msg = 'Por favor, ingresa la dirección IP de la báscula Wi-Fi.';
@@ -33,26 +31,21 @@ const WiFiScaleDetector: React.FC<WiFiScaleDetectorProps> = ({
     }
 
     try {
-      // --- Lógica de conexión y lectura para tu báscula Wi-Fi ---
-      // **AQUÍ DEBERÁS ADAPTAR ESTA LÓGICA a la API o protocolo REAL de tu báscula Wi-Fi.**
-      // Por ejemplo, haciendo una petición HTTP GET a un endpoint específico de la báscula.
-      // Esta es una SIMULACIÓN:
-      const response = await fetch(`http://${ipAddress}/weight`, { signal: AbortSignal.timeout(5000) }); // Ejemplo: /weight endpoint
+      const response = await fetch(`http://${ipAddress}/weight`, { signal: AbortSignal.timeout(5000) });
       if (!response.ok) {
         throw new Error(`Error HTTP: ${response.status}`);
       }
-      const data = await response.json(); // Asume que la respuesta es JSON con un campo 'weight'
+      const data = await response.json();
 
       if (data && typeof data.weight === 'number') {
         setCurrentWeight(data.weight);
-        onWeightUpdate(data.weight); // Notifica al padre el peso inicial
+        onWeightUpdate(data.weight);
         setIsConnected(true);
-        onConnectionStatusChange?.(true, `Báscula Wi-Fi (${ipAddress})`, null); // Notifica éxito de conexión
+        onConnectionStatusChange?.(true, `Báscula Wi-Fi (${ipAddress})`, null);
         setError(null);
 
-        // Inicia la lectura continua después de una conexión exitosa
         if (intervalRef.current) clearInterval(intervalRef.current);
-        intervalRef.current = window.setInterval(fetchWeight, 1000); // Lee cada segundo (ajusta según necesidad)
+        intervalRef.current = window.setInterval(fetchWeight, 1000);
       } else {
         throw new Error('Formato de datos de peso inválido recibido.');
       }
@@ -61,18 +54,16 @@ const WiFiScaleDetector: React.FC<WiFiScaleDetectorProps> = ({
       const errMsg = `Error de conexión Wi-Fi: ${(err as Error).message}`;
       setError(errMsg);
       setIsConnected(false);
-      onWeightUpdate(null); // Borra el peso en el padre si hay error
-      onConnectionStatusChange?.(false, null, errMsg); // Notifica error de conexión
+      onWeightUpdate(null);
+      onConnectionStatusChange?.(false, null, errMsg);
       if (intervalRef.current) clearInterval(intervalRef.current);
     } finally {
       setIsConnecting(false);
     }
   };
 
-  // Función para obtener el peso continuamente
   const fetchWeight = async () => {
     try {
-      // Esta función se llamará repetidamente para obtener actualizaciones de peso
       const response = await fetch(`http://${ipAddress}/weight`, { signal: AbortSignal.timeout(3000) });
       if (!response.ok) {
         throw new Error(`Error HTTP en lectura: ${response.status}`);
@@ -80,7 +71,7 @@ const WiFiScaleDetector: React.FC<WiFiScaleDetectorProps> = ({
       const data = await response.json();
       if (data && typeof data.weight === 'number') {
         setCurrentWeight(data.weight);
-        onWeightUpdate(data.weight); // Notifica al padre el peso continuo
+        onWeightUpdate(data.weight);
         setError(null);
       } else {
         setError('Formato de datos de peso inválido en lectura continua.');
@@ -90,35 +81,32 @@ const WiFiScaleDetector: React.FC<WiFiScaleDetectorProps> = ({
       console.error('Error en lectura continua de báscula Wi-Fi:', err);
       const errMsg = `Error de lectura Wi-Fi: ${(err as Error).message}`;
       setError(errMsg);
-      setIsConnected(false); // Asume desconexión por errores persistentes de lectura
+      setIsConnected(false);
       onWeightUpdate(null);
-      onConnectionStatusChange?.(false, null, errMsg); // Notifica al padre sobre la desconexión por error
+      onConnectionStatusChange?.(false, null, errMsg);
       if (intervalRef.current) clearInterval(intervalRef.current);
     }
   };
 
-  // Función para desconectar la báscula Wi-Fi
   const disconnectWiFiScale = () => {
     if (intervalRef.current) {
-      clearInterval(intervalRef.current); // Detiene la lectura continua
+      clearInterval(intervalRef.current);
     }
     setIsConnected(false);
     setCurrentWeight(null);
     setError(null);
-    onWeightUpdate(null); // Borra el peso en el padre
-    onConnectionStatusChange?.(false, null, null); // Notifica la desconexión
+    onWeightUpdate(null);
+    onConnectionStatusChange?.(false, null, null);
     console.log('Báscula Wi-Fi desconectada.');
   };
 
-  // Efecto de limpieza al desmontar el componente o cambiar el estado de conexión
   useEffect(() => {
     return () => {
-      // Asegura que el intervalo de lectura se detenga cuando el componente se desmonte
-      if (intervalRef.current) {
+              if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
     };
-  }, []); // El array vacío asegura que este efecto se ejecute solo al montar y desmontar
+  }, []); 
 
   return (
     <div className={styles.container}>
@@ -134,21 +122,21 @@ const WiFiScaleDetector: React.FC<WiFiScaleDetectorProps> = ({
             onChange={(e) => setIpAddress(e.target.value)}
             placeholder="Ej: 192.168.1.100"
             className={styles.input}
-            disabled={isConnected || isConnecting} // Deshabilita la edición si ya está conectado o conectando
+            disabled={isConnected || isConnecting} 
           />
         </div>
 
         <div className={styles.buttonsContainer}>
           <button
             onClick={connectAndReadWiFiScale}
-            disabled={isConnected || isConnecting || !ipAddress} // Deshabilitado si ya conectado/conectando o sin IP
+            disabled={isConnected || isConnecting || !ipAddress}
             className={styles.button}
           >
             {isConnecting ? 'Conectando...' : 'Conectar Wi-Fi'}
           </button>
           <button
             onClick={disconnectWiFiScale}
-            disabled={!isConnected && !isConnecting} // Deshabilitado si no está conectado ni intentando conectar
+            disabled={!isConnected && !isConnecting}
             className={styles.button}
           >
             Desconectar Wi-Fi
