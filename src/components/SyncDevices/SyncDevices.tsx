@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './SyncDevices.module.css';
-import ScaleReader from '../ScaleReader/ScaleReader';
+import ScaleReaderAll from '../ScaleReaderAll/ScaleReaderAll';
 
 interface Device {
   id: string;
@@ -43,7 +43,7 @@ const SyncDevices: React.FC = () => {
       <h2>Administrador de Balanzas</h2>
       <p>Haz clic en el botón "Sincronizar" para actualizar el estado del dispositivo.</p>
 
-      <ScaleReader />
+      <ScaleReaderAll />
 
 
       {devices.length === 0 ? (

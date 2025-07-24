@@ -1,8 +1,8 @@
-import type React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import productsData from "../../DataJson/products.json";
 import styles from './Scales.module.css';
 import Calculator from '../Calculator/Calculator';
+import ScaleReader from '../ScaleReader/ScaleReader';
 
 interface Product {
   id: string;
@@ -23,8 +23,21 @@ const Scales: React.FC = () => {
   const [currentWeight, setCurrentWeight] = useState<number | null>(null);
   const [weighingHistory, setWeighingHistory] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
-
   const [totalSalePrice, setTotalSalePrice] = useState<number | null>(null);
+
+  const [isConnected, setIsConnected] = useState<boolean>(false);
+  const [connectedDeviceName, setConnectedDeviceName] = useState<string | null>(null);
+  const [scaleError, setScaleError] = useState<string | null>(null);
+
+  const handleWeightUpdate = (weight: number | null) => {
+    setCurrentWeight(weight);
+  };
+
+  const handleConnectionStatusChange = (status: boolean, deviceName: string | null, error: string | null) => {
+    setIsConnected(status);
+    setConnectedDeviceName(deviceName);
+    setScaleError(error);
+  };
 
   const handleProductSelect = (product: Product) => {
     setProductToWeigh(product);
@@ -32,25 +45,33 @@ const Scales: React.FC = () => {
     setTotalSalePrice(null);
   };
 
-  const handleStartWeighing = () => {
-    if (productToWeigh) {
-      const simulatedWeight = Math.round(Math.random() * 5 + 0.1);
-      setCurrentWeight(simulatedWeight);
 
-      const calculatedTotal = Math.round(simulatedWeight * productToWeigh.priceRetail);
+  useEffect(() => {
+    if (currentWeight !== null && productToWeigh) {
+      const calculatedTotal = Math.round(currentWeight * productToWeigh.priceRetail);
       setTotalSalePrice(calculatedTotal);
+    } else {
+      setTotalSalePrice(null);
+    }
+  }, [currentWeight, productToWeigh]);
 
+
+  const handleRecordWeighing = () => {
+    if (productToWeigh && currentWeight !== null && totalSalePrice !== null) {
       const now = new Date();
       const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
       setWeighingHistory(prevHistory => [
-        `${productToWeigh.name} - ${simulatedWeight} kg - Total: $${calculatedTotal} (${time})`,
-        ...prevHistory.slice(0, 4)
+        `${productToWeigh.name} - ${currentWeight} kg - Total: $${totalSalePrice} (${time})`,
+        ...prevHistory.slice(0, 4) 
       ]);
+      // setCurrentWeight(null);
+      // setTotalSalePrice(null);
     } else {
-      alert("Por favor, selecciona un producto de la lista para pesar.");
+      alert("Por favor, selecciona un producto y asegúrate de que la báscula esté conectada y proporcionando un peso válido.");
     }
   };
+
 
   const handleCalibrate = () => {
     alert("Simulando calibración de la balanza...");
@@ -70,7 +91,7 @@ const Scales: React.FC = () => {
     <div className={styles.scalesContainer}>
       <h2>Gestión de Balanzas</h2>
       <p className={styles.scalesIntro}>
-        Haz clic en un producto para seleccionarlo y simular su pesaje. Utiliza el buscador para encontrar productos rápidamente por nombre, categoría o marca.
+        Haz clic en un producto para seleccionarlo y luego conecta tu báscula para obtener el peso real.
       </p>
 
       <div className={styles.scalesMainLayout}>
@@ -125,16 +146,27 @@ const Scales: React.FC = () => {
                 <Calculator />
               </div>
 
+              <ScaleReader
+                onWeightUpdate={handleWeightUpdate}
+                onConnectionStatusChange={handleConnectionStatusChange}
+                showUI={true}
+              />
+
               <div className={styles.scaleDisplay}>
-                <h3>Lectura Actual:</h3>
+                <h3>Lectura de Báscula:</h3>
+                {scaleError && <p className={styles.errorMessage}>{scaleError}</p>}
                 <p className={styles.scaleValue}>
-                  {currentWeight !== null ? `${currentWeight}kg` : '--.-- kg'}
+                  {currentWeight !== null ? `${currentWeight} kg` : '--.-- kg'}
                 </p>
                 <p className={styles.totalPriceValue}>
-                  Total : {totalSalePrice !== null ? `$ ${totalSalePrice} ` : '--.--'}
+                  Total : {totalSalePrice !== null ? `$ ${totalSalePrice}` : '--.--'}
                 </p>
-                <button className={styles.scaleButton} onClick={handleStartWeighing}>
-                  Pesar {productToWeigh.name}
+                <button
+                  className={styles.scaleButton}
+                  onClick={handleRecordWeighing}
+                  disabled={!productToWeigh || currentWeight === null || !isConnected}
+                >
+                  Registrar Pesaje
                 </button>
                 <button className={`${styles.scaleButton} ${styles.secondaryButton}`} onClick={handleCalibrate}>Calibrar Balanza</button>
               </div>
@@ -144,13 +176,24 @@ const Scales: React.FC = () => {
               <h3>Preparado para Pesar</h3>
               <p>Selecciona un producto de la lista de la izquierda para comenzar el pesaje.</p>
               <i className="fa-solid fa-hand-pointer fa-3x" style={{ marginTop: '20px', color: '#ccc' }}></i>
+              <ScaleReader
+                onWeightUpdate={handleWeightUpdate}
+                onConnectionStatusChange={handleConnectionStatusChange}
+                showUI={true}
+              />
             </div>
           )}
 
           <div className={styles.scaleInfo}>
             <h4>Estado de la Balanza:</h4>
-            <p>Conectada: <span className={styles.statusIndicatorConnected}>●</span> Sí</p>
-            <p>Última actualización: hace 5 segundos</p>
+            {scaleError ? (
+              <p className={styles.errorMessage}>{scaleError}</p>
+            ) : (
+              <p>
+                Conectada: <span className={isConnected ? styles.statusIndicatorConnected : styles.statusIndicatorDisconnected}>●</span>{' '}
+                {isConnected ? `Sí (${connectedDeviceName})` : 'No'}
+              </p>
+            )}
           </div>
 
           <div className={styles.scaleHistory}>
